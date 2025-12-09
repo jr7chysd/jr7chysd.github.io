@@ -60,8 +60,9 @@
         }
 
         .nav-link {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
             padding: 8px 12px;
             background-color: #2a2a2a;
             border-radius: 4px;
@@ -70,6 +71,10 @@
             transition: all 0.15s ease;
             white-space: nowrap;
             border: none;
+            flex: 1 1 0; /* 平均分配宽度 */
+            min-width: 120px; /* 最小宽度 */
+            max-width: 200px; /* 最大宽度 */
+            text-align: center;
         }
 
         .nav-link:hover {
@@ -106,6 +111,25 @@
             background-color: #40407a;
         }
 
+        /* 响应式设计 - 根据屏幕宽度调整每行项目数 */
+        @media (min-width: 1200px) {
+            .nav-link {
+                flex: 1 1 calc(20% - 7px); /* 每行最多5个 */
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .nav-link {
+                flex: 1 1 calc(25% - 7px); /* 每行最多4个 */
+            }
+        }
+
+        @media (min-width: 480px) and (max-width: 767px) {
+            .nav-link {
+                flex: 1 1 calc(33.333% - 7px); /* 每行最多3个 */
+            }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -126,7 +150,10 @@
             }
 
             .nav-link {
+                flex: 1 1 calc(50% - 6px); /* 每行最多2个 */
                 padding: 7px 10px;
+                min-width: 100px;
+                max-width: none;
             }
 
             .link-text {
@@ -135,6 +162,17 @@
 
             .category-title {
                 font-size: 1rem;
+            }
+
+            .nav-link i {
+                font-size: 0.9rem;
+                margin-right: 4px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .nav-link {
+                flex: 1 1 100%; /* 每行1个 */
             }
         }
     </style>
