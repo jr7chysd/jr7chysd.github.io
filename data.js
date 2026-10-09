@@ -32,8 +32,9 @@ window.NAV_DATA = [
     items: [
       { name: 'CN',          url: 'https://www.gov.cn/',                  icon: 'fa-solid fa-landmark-flag' },
       { name: 'CSRC',        url: 'https://www.csrc.gov.cn/',             icon: 'fa-solid fa-scale-balanced' },
-      { name: 'Mail',   url: 'https://mail.csrc.gov.cn/',                 icon: 'fa-solid fa-envelope' },
-      { name: 'Law Library', url: 'https://neris.csrc.gov.cn/falvfagui/', icon: 'fa-solid fa-section' }
+      { name: 'Mail',        url: 'https://mail.csrc.gov.cn/',            icon: 'fa-solid fa-envelope' },
+      { name: 'Law Library', url: 'https://neris.csrc.gov.cn/falvfagui/', icon: 'fa-solid fa-section' },
+      { name: 'AMAC Info',   url: 'https://gs.amac.org.cn/',              icon: 'fa-solid fa-magnifying-glass' }
     ]
   },
 
