@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 深色主题：若启用 style.css 底部预留的浅色主题，这两行的 dark / #0b0b0c 要跟着一起改 -->
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0b0b0c" />
+  <title>Nav</title>
+  <!-- 站点图标：SVG 版给现代浏览器，PNG 版给 iOS 加到主屏（图形是 FontAwesome 的 fa-compass） -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="apple-touch-icon.png" sizes="180x180" type="image/png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <!-- FontAwesome 图标库（如需离线使用，把下面这行换成本地文件路径即可） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- 内容由 app.js 依据 data.js 自动生成，本文件平时无需改动 -->
+  <main id="app" class="page">
+    <noscript><p class="load-error">此页需要 JavaScript 才能显示链接。</p></noscript>
+  </main>
+
+  <!-- 境外服务是同一页面的另一个视图（#overseas）；下面这个点就是入口，刻意做得不显眼 -->
+  <a class="ghost-link" href="#overseas" aria-label="境外服务">·</a>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
