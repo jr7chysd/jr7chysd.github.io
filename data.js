@@ -69,13 +69,15 @@ window.NAV_DATA = [
   {
     category: 'AI Studio',
     items: [
-      { name: 'Jimeng',      url: 'https://jimeng.jianying.com/',        icon: 'fa-solid fa-wand-magic-sparkles' },
-      { name: 'Kling',       url: 'https://app.klingai.com/',            icon: 'fa-solid fa-video' },
-      { name: 'Hailuo',      url: 'https://hailuoai.com/',               icon: 'fa-solid fa-water' },
-      { name: 'Vidu',        url: 'https://www.vidu.cn/',                icon: 'fa-solid fa-clapperboard' },
-      { name: 'Wanxiang',    url: 'https://tongyi.aliyun.com/wanxiang/', icon: 'fa-solid fa-palette' },
-      { name: 'OpenRouter',  url: 'https://openrouter.ai/',              icon: 'fa-solid fa-route', overseas: true },
-      { name: 'Midjourney',  url: 'https://www.midjourney.com/',         icon: 'fa-solid fa-paintbrush', overseas: true }
+      { name: 'Jimeng',     url: 'https://jimeng.jianying.com/',        icon: 'fa-solid fa-wand-magic-sparkles' },
+      { name: 'Kling',      url: 'https://app.klingai.com/',            icon: 'fa-solid fa-video' },
+      { name: 'Hailuo',     url: 'https://hailuoai.com/',               icon: 'fa-solid fa-water' },
+      { name: 'Vidu',       url: 'https://www.vidu.cn/',                icon: 'fa-solid fa-clapperboard' },
+      { name: 'Wanxiang',   url: 'https://tongyi.aliyun.com/wanxiang/', icon: 'fa-solid fa-palette' },
+      { name: 'Midjourney', url: 'https://www.midjourney.com/',         icon: 'fa-solid fa-paintbrush',          desc: '图像生成', overseas: true },
+      { name: 'Runway',     url: 'https://runwayml.com/',               icon: 'fa-solid fa-film',                desc: '视频生成与剪辑', overseas: true },
+      { name: 'ElevenLabs', url: 'https://elevenlabs.io/',              icon: 'fa-solid fa-microphone-lines',    desc: '语音合成与克隆', overseas: true },
+      { name: 'OpenRouter', url: 'https://openrouter.ai/',              icon: 'fa-solid fa-route',               desc: '多模型聚合路由', overseas: true }
     ]
   },
 
