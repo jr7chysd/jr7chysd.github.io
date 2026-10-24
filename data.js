@@ -69,12 +69,13 @@ window.NAV_DATA = [
   {
     category: 'AI Studio',
     items: [
-      { name: 'Volcengine',  url: 'https://www.volcengine.com/',         icon: 'fa-solid fa-fire' },
       { name: 'Jimeng',      url: 'https://jimeng.jianying.com/',        icon: 'fa-solid fa-wand-magic-sparkles' },
-      { name: 'SiliconFlow', url: 'https://siliconflow.cn/',             icon: 'fa-solid fa-microchip' },
       { name: 'Kling',       url: 'https://app.klingai.com/',            icon: 'fa-solid fa-video' },
+      { name: 'Hailuo',      url: 'https://hailuoai.com/',               icon: 'fa-solid fa-water' },
+      { name: 'Vidu',        url: 'https://www.vidu.cn/',                icon: 'fa-solid fa-clapperboard' },
+      { name: 'Wanxiang',    url: 'https://tongyi.aliyun.com/wanxiang/', icon: 'fa-solid fa-palette' },
       { name: 'OpenRouter',  url: 'https://openrouter.ai/',              icon: 'fa-solid fa-route', overseas: true },
-      { name: 'Midjourney',  url: 'https://www.midjourney.com/',         icon: 'fa-solid fa-paintbrush', overseas: true },
+      { name: 'Midjourney',  url: 'https://www.midjourney.com/',         icon: 'fa-solid fa-paintbrush', overseas: true }
     ]
   },
 
