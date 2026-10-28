@@ -6,7 +6,7 @@
      1. Link renderer      builds the near / far shore lists from data.js
      2. Random Lab         the three generators
      3. Height equaliser   keeps the lab tabs and stages the same size
-     4. App                header note, view switching (keys + swipe), boot
+     4. App                header note, click switching, boot
 
    data.js must be loaded before this file (it defines DATA_INDEX / DATA_OS).
    No bundler, no modules: plain ES5 inside IIFEs.
@@ -1735,11 +1735,12 @@ Lab height equaliser — keeps the three lab tabs the same size
   ];
 
   var note = document.querySelector('.site-note');
+
   if (note && LINES.length) {
     note.textContent = LINES[Math.floor(Math.random() * LINES.length)];
   }
 
-  /* Views: two keys cycle through them, no buttons in the header. */
+  /* Views: a click on the note's second word cycles through them. */
   var VIEWS = [
     { name: 'index', title: 'Two Shores · Index' },
     { name: 'os',    title: 'Two Shores · Overseas' },
@@ -1789,53 +1790,41 @@ Lab height equaliser — keeps the three lab tabs the same size
     return -1;
   }
 
-  /* Shortcuts: [ previous view, ] next view. Single key, no browser clash. */
-  document.addEventListener('keydown', function (event) {
-    if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
+  /* The second word of the note switches to the next view. Hit-tested with a
+     text Range so the markup stays plain text: no span, no hover, no cursor. */
+  function secondWordRect() {
+    if (!note || !note.firstChild || note.firstChild.nodeType !== 3) return null;
 
-    var target = event.target || {};
-    var tag = (target.tagName || '').toLowerCase();
-    var type = (target.type || '').toLowerCase();
-    var typing = tag === 'textarea'
-      || (tag === 'input' && /^(text|search|email|url|password|number|tel)$/.test(type));
-    if (typing || target.isContentEditable) return;
+    var node = note.firstChild;
+    var words = /\S+/g;
+    var match;
+    var count = 0;
 
-    if (event.key === ']') { show(current + 1, true); event.preventDefault(); }
-    else if (event.key === '[') { show(current - 1, true); event.preventDefault(); }
-  });
-
-  /* Touch: same two moves, as a swipe. Left = next view, right = previous.
-     A gesture that starts on a control (slider, button, field) is ignored so
-     the length slider keeps working. */
-  var touchStart = null;
-
-  document.addEventListener('touchstart', function (event) {
-    if (event.touches.length !== 1) { touchStart = null; return; }
-    var touch = event.touches[0];
-    touchStart = { x: touch.clientX, y: touch.clientY, target: event.target };
-  }, { passive: true });
-
-  document.addEventListener('touchend', function (event) {
-    var start = touchStart;
-    touchStart = null;
-    if (!start || !event.changedTouches.length) return;
-
-    var touch = event.changedTouches[0];
-    var dx = touch.clientX - start.x;
-    var dy = touch.clientY - start.y;
-
-    /* Long, mostly horizontal, not a scroll. */
-    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-
-    var el = start.target;
-    while (el && el !== document.body) {
-      var tag = (el.tagName || '').toLowerCase();
-      if (tag === 'input' || tag === 'button' || tag === 'textarea' || tag === 'select') return;
-      el = el.parentElement;
+    while ((match = words.exec(node.nodeValue))) {
+      count += 1;
+      if (count === 2) {
+        var range = document.createRange();
+        range.setStart(node, match.index);
+        range.setEnd(node, match.index + match[0].length);
+        return range.getBoundingClientRect();
+      }
     }
 
-    show(current + (dx < 0 ? 1 : -1), true);
-  }, { passive: true });
+    return null;
+  }
+
+  if (note) {
+    note.addEventListener('click', function (event) {
+      var rect = secondWordRect();
+      if (!rect) return;
+
+      var pad = 2; /* forgiving for touch */
+      var inside = event.clientX >= rect.left - pad && event.clientX <= rect.right + pad
+        && event.clientY >= rect.top - pad && event.clientY <= rect.bottom + pad;
+
+      if (inside) show(current + 1, true);
+    });
+  }
 
   document.querySelector('.brand').addEventListener('click', function (event) {
     event.preventDefault();
