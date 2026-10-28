@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#0b0d0c" />
+  <meta name="description" content="Two Shores — a near shore, a far shore, and a small workshop." />
+  <title>Two Shores</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css" />
+
+  <!-- Link views (near shore / far shore) -->
+  <link rel="stylesheet" href="style.css" id="css-nav" />
+
+  <!-- Lab view — loaded but inert until the lab is shown (media is switched in JS) -->
+  <link rel="stylesheet" href="style-lab.css" id="css-lab" media="not all" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#index" aria-label="Two Shores home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/>
+        </svg>
+      </span>
+      <span class="brand-name">TWO SHORES</span>
+    </a>
+
+    <p class="site-note">Near shore — the everyday, kept close.</p>
+  </header>
+
+  <main class="page" id="view-index">
+    <h1 class="sr-only">Index</h1>
+
+    <div id="app-index" class="app-links">
+      <noscript><p class="load-error">JavaScript is required to show these links.</p></noscript>
+    </div>
+  </main>
+
+  <main class="page" id="view-os" hidden>
+    <h1 class="sr-only">Overseas</h1>
+
+    <div id="app-os" class="app-links">
+      <noscript><p class="load-error">JavaScript is required to show these links.</p></noscript>
+    </div>
+  </main>
+
+  <main class="shell" id="view-lab" hidden>
+    <div class="page-head">
+      <div>
+        <h1>Random tools</h1>
+        <p class="slogan">Strong passwords. Memorable names.</p>
+      </div>
+    </div>
+
+    <div class="workspace">
+      <!-- Adding a tool? Follow section 7 of DESIGN.md. -->
+      <div class="tabs" role="tablist" aria-label="Generators">
+        <button class="tab" id="tab-password" type="button" role="tab" aria-selected="true" aria-controls="panel-password" data-tab="password">
+          <span class="tab-index">01</span>
+          <span>Password</span>
+        </button>
+        <button class="tab" id="tab-username" type="button" role="tab" aria-selected="false" aria-controls="panel-username" data-tab="username" tabindex="-1">
+          <span class="tab-index">02</span>
+          <span>Username</span>
+        </button>
+        <button class="tab" id="tab-nickname" type="button" role="tab" aria-selected="false" aria-controls="panel-nickname" data-tab="nickname" tabindex="-1">
+          <span class="tab-index">03</span>
+          <span>Nickname</span>
+        </button>
+      </div>
+
+      <!-- =============================== PASSWORD =============================== -->
+      <article class="tool-panel" id="panel-password" role="tabpanel" aria-labelledby="tab-password" data-panel="password">
+        <h2 class="sr-only">Password generator</h2>
+
+        <div class="panel-layout">
+          <section class="stage" aria-label="Generated password">
+          <div class="stage-head">
+            <span class="field-label">PASSWORD</span>
+            <div class="stage-head-right">
+              <span class="strength-badge" id="strengthBadge" data-level="4">
+                <span id="strengthText">Very strong · ~116 bits</span>
+              </span>
+              <button class="icon-btn copy-chip" id="copyPassword" type="button" aria-label="Copy password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"/>
+                  <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                </svg>
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="password-row">
+            <div class="password-value" id="passwordOutput"></div>
+          </div>
+
+          <div class="password-actions stage-actions">
+            <button class="icon-btn" id="togglePassword" type="button" aria-label="Hide password" title="Hide password">
+              <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/>
+                <circle cx="12" cy="12" r="2.8"/>
+              </svg>
+              <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 3l18 18"/>
+                <path d="M10.6 6.2A9.8 9.8 0 0 1 12 6c6 0 9.5 6 9.5 6a17.8 17.8 0 0 1-3.3 4.1M6.7 6.7C4.2 8.2 2.5 12 2.5 12s3.5 6 9.5 6c1.6 0 3-.4 4.2-1"/>
+                <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="strength-meter" id="strengthMeter" data-level="4" aria-hidden="true">
+            <span class="is-on"></span><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span>
+          </div>
+          <div class="stage-foot">
+            <span id="passwordMeta">Pool 56 · 3 sets · at least 1 each</span>
+          </div>
+          <span class="sr-only" id="passwordLive" role="status" aria-live="polite"></span>
+          </section>
+
+          <div class="settings-column">
+            <div class="controls">
+          <div class="control-grid">
+            <div class="control-block">
+              <div class="control-head">
+                <span>Length</span>
+                <span class="control-value" id="lengthValue">20 chars</span>
+              </div>
+              <div class="length-control">
+                <button class="step-btn" type="button" data-length-step="-1" aria-label="Decrease password length">−</button>
+                <div class="range-wrap">
+                  <input class="range" id="lengthRange" type="range" min="8" max="64" step="1" value="20" aria-label="Password length" />
+                </div>
+                <button class="step-btn" type="button" data-length-step="1" aria-label="Increase password length">+</button>
+              </div>
+            </div>
+
+            <fieldset class="control-block charset-field">
+              <legend class="sr-only">Character sets</legend>
+              <div class="control-head">
+                <span>Characters</span>
+                <span class="control-value" id="charsetCount">3 / 4</span>
+              </div>
+              <div class="charset-grid">
+                <label class="char-option is-on">
+                  <input type="checkbox" data-charset="upper" checked />
+                  <span class="char-box" aria-hidden="true">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 6 2.5 2.5L10 3"/></svg>
+                  </span>
+                  <span class="char-text"><b>A–Z</b><small>Uppercase</small></span>
+                </label>
+                <label class="char-option is-on">
+                  <input type="checkbox" data-charset="lower" checked />
+                  <span class="char-box" aria-hidden="true">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 6 2.5 2.5L10 3"/></svg>
+                  </span>
+                  <span class="char-text"><b>a–z</b><small>Lowercase</small></span>
+                </label>
+                <label class="char-option is-on">
+                  <input type="checkbox" data-charset="digits" checked />
+                  <span class="char-box" aria-hidden="true">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 6 2.5 2.5L10 3"/></svg>
+                  </span>
+                  <span class="char-text"><b>0–9</b><small>Numbers</small></span>
+                </label>
+                <label class="char-option">
+                  <input type="checkbox" data-charset="symbols" />
+                  <span class="char-box" aria-hidden="true">
+                    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 6 2.5 2.5L10 3"/></svg>
+                  </span>
+                  <span class="char-text"><b>! @ #</b><small>Symbols</small></span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="switch-row">
+            <div class="switch-copy">
+              <strong>Exclude ambiguous characters</strong>
+              <small>Removes 0 O o 1 l I</small>
+            </div>
+            <label class="switch">
+              <input id="excludeAmbiguous" type="checkbox" checked />
+              <span class="switch-track"></span>
+            </label>
+          </div>
+            </div>
+          </div>
+
+          <div class="panel-foot">
+            <p class="privacy-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="10" width="16" height="11" rx="2"/>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+              </svg>
+              Passwords are never stored.
+            </p>
+          <button class="btn-generate" id="generatePassword" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 11a8.1 8.1 0 1 0-2.4 5.7M20 4v7h-7"/>
+            </svg>
+              Generate password
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- =============================== USERNAME =============================== -->
+      <article class="tool-panel" id="panel-username" role="tabpanel" aria-labelledby="tab-username" data-panel="username" hidden>
+        <h2 class="sr-only">Username generator</h2>
+
+        <div class="panel-layout">
+          <section class="stage" aria-label="Generated username">
+          <div class="stage-head">
+            <span class="field-label">USERNAME</span>
+            <div class="stage-head-right">
+              <span class="count-badge" id="usernameCount">15 / 15</span>
+              <button class="icon-btn copy-chip" id="copyUsername" type="button" aria-label="Copy username">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"/>
+                  <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                </svg>
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="username-row">
+            <div class="username-value" id="usernameOutput"></div>
+          </div>
+
+          <div class="identity-line">
+            <span class="identity-meaning" id="usernameMeaning">Cedar + Fox</span>
+            <span class="style-tag" id="usernameStyleTag">Nature</span>
+            <span class="suffix-tag" id="usernameSuffixTag">Pronounceable suffix</span>
+          </div>
+          <p class="pronounce">
+            <span class="pronounce-label">Say</span>
+            <strong id="usernamePronounce">Cedar Fox Ka-vo-mi</strong>
+          </p>
+          <span class="sr-only" id="usernameLive" role="status" aria-live="polite"></span>
+          </section>
+
+          <div class="settings-column">
+            <div class="controls">
+          <div class="control-grid">
+            <div class="control-block">
+              <div class="control-head">
+                <span>Style</span>
+              </div>
+              <div class="style-chips" id="styleChips" role="group" aria-label="Username style">
+                <button class="style-chip" type="button" data-style="random" aria-pressed="true">Random</button>
+                <button class="style-chip" type="button" data-style="nature" aria-pressed="false">Nature</button>
+                <button class="style-chip" type="button" data-style="cosmic" aria-pressed="false">Cosmic</button>
+                <button class="style-chip" type="button" data-style="tech" aria-pressed="false">Tech</button>
+                <button class="style-chip" type="button" data-style="poetic" aria-pressed="false">Poetic</button>
+                <button class="style-chip" type="button" data-style="fantasy" aria-pressed="false">Fantasy</button>
+                <button class="style-chip" type="button" data-style="ocean" aria-pressed="false">Ocean</button>
+                <button class="style-chip" type="button" data-style="cozy" aria-pressed="false">Cozy</button>
+                <button class="style-chip" type="button" data-style="urban" aria-pressed="false">Urban</button>
+              </div>
+              <p class="style-hint" id="styleHint">Random style</p>
+            </div>
+
+            <div class="control-block">
+              <div class="control-head">
+                <span>Format</span>
+                <span class="control-value" id="formatHint">CamelCase</span>
+              </div>
+              <div class="segmented" id="formatChips" role="group" aria-label="Username format">
+                <button class="seg-btn" type="button" data-format="camel" aria-pressed="true" title="CamelCase: CedarFoxKavomi">Aa</button>
+                <button class="seg-btn" type="button" data-format="lower" aria-pressed="false" title="lowercase: cedarfoxkavomi">aa</button>
+                <button class="seg-btn" type="button" data-format="snake" aria-pressed="false" title="snake_case: cedar_fox_kavomi">a_b</button>
+                <button class="seg-btn" type="button" data-format="kebab" aria-pressed="false" title="kebab-case: cedar-fox-kavomi">a-b</button>
+                <button class="seg-btn" type="button" data-format="random" aria-pressed="false" title="Random format each generation">Any</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-block username-length-block">
+            <div class="control-head">
+              <span>Max length</span>
+              <span class="control-value" id="usernameLengthValue">15 chars</span>
+            </div>
+            <div class="length-control">
+              <button class="step-btn" type="button" data-username-length-step="-1" aria-label="Decrease maximum username length">−</button>
+              <div class="range-wrap">
+                <input class="range" id="usernameLengthRange" type="range" min="12" max="20" step="1" value="15" aria-label="Maximum username length" />
+              </div>
+              <button class="step-btn" type="button" data-username-length-step="1" aria-label="Increase maximum username length">+</button>
+            </div>
+          </div>
+
+          <div class="switch-row">
+            <div class="switch-copy">
+              <strong>Pronounceable suffix</strong>
+              <small>1–3 syllables · local dedupe</small>
+            </div>
+            <label class="switch">
+              <input id="suffixToggle" type="checkbox" checked />
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </div>
+          </div>
+
+          <div class="panel-foot">
+            <p class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            Usernames are kept locally for dedupe only.
+          </p>
+          <button class="btn-generate" id="generateUsername" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 11a8.1 8.1 0 1 0-2.4 5.7M20 4v7h-7"/>
+            </svg>
+              Generate username
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- =============================== NICKNAME =============================== -->
+      <article class="tool-panel" id="panel-nickname" role="tabpanel" aria-labelledby="tab-nickname" data-panel="nickname" hidden>
+        <h2 class="sr-only">Nickname generator</h2>
+
+        <div class="panel-layout">
+          <section class="stage stage--nickname" aria-label="Generated nickname">
+            <div class="stage-head">
+              <span class="field-label">NICKNAME</span>
+              <div class="stage-head-right">
+                <span class="count-badge" id="nicknameWordCount">2 words</span>
+                <button class="icon-btn copy-chip" id="copyNickname" type="button" aria-label="Copy nickname">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="8" y="8" width="12" height="12" rx="2"/>
+                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>
+                  </svg>
+                  <span data-copy-label>Copy</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="nickname-row">
+              <div class="nickname-value" id="nicknameOutput"></div>
+            </div>
+
+            <div class="identity-line">
+              <span class="style-tag" id="nicknameMoodTag">Still</span>
+              <span class="suffix-tag" id="nicknamePatternTag">Pair</span>
+            </div>
+            <p class="nickname-hint" id="nicknameHint">Quiet, cold, and clear.</p>
+            <span class="sr-only" id="nicknameLive" role="status" aria-live="polite"></span>
+          </section>
+
+          <div class="settings-column">
+            <div class="controls">
+              <div class="control-block">
+                <div class="control-head">
+                  <span>Mood</span>
+                </div>
+                <div class="style-chips" id="nicknameMoodChips" role="group" aria-label="Nickname mood">
+                  <button class="style-chip" type="button" data-nickname-mood="random" aria-pressed="true">Random</button>
+                  <button class="style-chip" type="button" data-nickname-mood="still" aria-pressed="false">Still</button>
+                  <button class="style-chip" type="button" data-nickname-mood="dreamy" aria-pressed="false">Dreamy</button>
+                  <button class="style-chip" type="button" data-nickname-mood="melancholy" aria-pressed="false">Melancholy</button>
+                  <button class="style-chip" type="button" data-nickname-mood="radiant" aria-pressed="false">Radiant</button>
+                  <button class="style-chip" type="button" data-nickname-mood="wild" aria-pressed="false">Wild</button>
+                </div>
+                <p class="style-hint" id="nicknameMoodHint">One of five moods.</p>
+              </div>
+
+              <div class="control-block">
+                <div class="control-head">
+                  <span>Pattern</span>
+                  <span class="control-value" id="nicknamePatternHint">Pair</span>
+                </div>
+                <div class="segmented segmented--nickname" id="nicknamePatternChips" role="group" aria-label="Nickname pattern">
+                  <button class="seg-btn" type="button" data-nickname-pattern="pair" aria-pressed="true">Pair</button>
+                  <button class="seg-btn" type="button" data-nickname-pattern="of" aria-pressed="false">Of</button>
+                  <button class="seg-btn" type="button" data-nickname-pattern="after" aria-pressed="false">After</button>
+                </div>
+                <p class="style-hint">Pair: Misted Harbor · Of: Harbor of Dusk · After: Garden after Rain</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-foot">
+            <p class="privacy-note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 4C12 4 7 9 7 15c0 2 1 4 2 5 8-1 11-7 11-16Z"/>
+                <path d="M4 21c4-8 9-12 14-15"/>
+              </svg>
+              Nicknames are generated locally and never stored.
+            </p>
+            <button class="btn-generate" id="generateNickname" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 11a8.1 8.1 0 1 0-2.4 5.7M20 4v7h-7"/>
+              </svg>
+              Generate nickname
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <script src="data.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
